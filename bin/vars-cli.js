@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import { program } from 'commander';
 import { authenticate } from '../utils/authentication.js';
 import { getAwsCredentialsRequest, isCredentialsValid } from '../utils/aws-credentials.js';
