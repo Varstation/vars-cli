@@ -7,6 +7,7 @@ import { uploadFiles } from '../utils/upload-files.js';
 import { handleAuthenticationError, handleDefaultRequestError } from '../utils/log.js';
 import { getJson } from '../utils/functions.js';
 import { AWS_CREDENTIALS_PATH } from '../utils/constants.js';
+import { changeEnvironment } from '../utils/environment.js';
 
 program
     .command('auth')
@@ -14,6 +15,18 @@ program
     .action(async () => {
         authenticate().catch(handleAuthenticationError);
     });
+
+program
+    .command('env')
+    .description('Change Varstation environment')
+    .action(() => {
+        changeEnvironment().then(() => {
+            console.log('Environment set with success.')
+        }).catch((err) => {
+            console.log(err);
+        });
+    });
+
 
 program
     .command('upload_routine')
