@@ -2,27 +2,15 @@ import inquirer from 'inquirer';
 import { getJson, saveJson } from './functions.js';
 import { ENVIRONMENT_SELECTION_PATH } from './constants.js';
 
-export const ENVIRONMENTS_OPTIONS = Object.freeze({
-    PRODUCTION:   1,
-    HOMOLOG:  2,
-    LOCAL_DEVELOPMENT: 3,
-});
-
-const ENVIRONMENTS_DISPLAY = Object.freeze({
-    [ENVIRONMENTS_OPTIONS.PRODUCTION]: '[Default] Production',
-    [ENVIRONMENTS_OPTIONS.HOMOLOG]:  'Homolog',
-    [ENVIRONMENTS_OPTIONS.LOCAL_DEVELOPMENT]: 'Local Development',
-});
-
-const ENVIRONMENTS_VALUES = Object.freeze({
-    '[Default] Production': ENVIRONMENTS_OPTIONS.PRODUCTION,
-    'Homolog': ENVIRONMENTS_OPTIONS.HOMOLOG,
-    'Local Development': ENVIRONMENTS_OPTIONS.LOCAL_DEVELOPMENT,
-});
-
 const LOCAL_URL = 'http://localhost:8000/api/';
 const HOMOLOG_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api';
-const PRODUCTION_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api';
+const PRODUCTION_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api'; // TODO Get the real one
+
+export const ENVIRONMENTS_OPTIONS = Object.freeze({
+    PRODUCTION: '[Default] Production',
+    HOMOLOG:  'Homolog',
+    LOCAL_DEVELOPMENT: 'Local Development',
+});
 
 export const getApiUrl = () => {
     const environment = getJson(ENVIRONMENT_SELECTION_PATH);
@@ -45,12 +33,12 @@ export const changeEnvironment = async () => {
             name: 'environment',
             message: 'Select the environment you want to work on:',
             choices: [
-                ENVIRONMENTS_DISPLAY[ENVIRONMENTS_OPTIONS.PRODUCTION],
-                ENVIRONMENTS_DISPLAY[ENVIRONMENTS_OPTIONS.HOMOLOG],
-                ENVIRONMENTS_DISPLAY[ENVIRONMENTS_OPTIONS.LOCAL_DEVELOPMENT],
+                ENVIRONMENTS_OPTIONS.PRODUCTION,
+                ENVIRONMENTS_OPTIONS.HOMOLOG,
+                ENVIRONMENTS_OPTIONS.LOCAL_DEVELOPMENT,
             ],
-            default: ENVIRONMENTS_DISPLAY[ENVIRONMENTS_OPTIONS.PRODUCTION],
+            default: ENVIRONMENTS_OPTIONS.PRODUCTION,
         }
     ]);
-    saveJson(ENVIRONMENT_SELECTION_PATH, ENVIRONMENTS_VALUES[environment]);
+    saveJson(ENVIRONMENT_SELECTION_PATH, environment);
 };
