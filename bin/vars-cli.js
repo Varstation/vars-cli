@@ -4,15 +4,13 @@ import { program } from 'commander';
 import { authenticate } from '../utils/authentication.js';
 import { getAwsCredentialsRequest, isCredentialsValid } from '../utils/aws-credentials.js';
 import { Uploader } from '../utils/upload-files.js';
-import { handleRequestError, logFailedRequest } from '../utils/log.js';
+import { handleAuthenticationError, handleDefaultRequestError } from '../utils/log.js';
 
 program
     .command('auth')
     .description('Authenticate to Varstation system')
     .action(async () => {
-        authenticate().catch((error) => {
-
-        });
+        authenticate().catch(handleAuthenticationError);
     });
 
 program
@@ -27,7 +25,7 @@ program
                 getAwsCredentialsRequest().then((credentials) => {
                     const uploader = new Uploader(credentials, routineName);
                     uploader.uploadFiles(path);
-                }).catch(handleRequestError);
+                }).catch(handleDefaultRequestError);
             } else {
                 const uploader = new Uploader(credentials, routineName);
                 uploader.uploadFiles(path);
