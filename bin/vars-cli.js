@@ -19,8 +19,8 @@ program
     .argument('Path', 'Path of the directory with the routine')
     .argument('Routine name', 'Name of the routine')
     .option('-e, --exclude <string>', 'File to exclude')
-    .action((path, routineName, options) => {
-            let credentials = null; //getJson(AWS_CREDENTIALS_PATH);
+    .action((path, routineName) => {
+            let credentials = getJson(AWS_CREDENTIALS_PATH);
             if (!isCredentialsValid(credentials)) {
                 getAwsCredentialsRequest().then((credentials) => {
                     const uploader = new Uploader(credentials, routineName);
