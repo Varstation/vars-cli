@@ -45,7 +45,6 @@ export class Uploader {
 
         return request.promise();
 
-
     }
 
     uploadFiles(path) {
@@ -61,4 +60,9 @@ export class Uploader {
             this.multiBar.stop();
         })
     }
+}
+
+export const uploadFiles = (credentials, routineName, path) => {
+    const uploader = new Uploader(credentials, routineName);
+    uploader.uploadFiles(path);
 }

@@ -11,11 +11,11 @@ export const getJson = (path) => {
 };
 
 export const saveJson = (filename, data) => {
-    createDataDirectoryIfNotExists();
+    createDataDirectoryIfDoesntExists();
     fs.writeFileSync(`${DATA_FOLDER_PATH}/${filename}`, JSON.stringify(data, null, '\t'));
 };
 
-const createDataDirectoryIfNotExists = () => {
+const createDataDirectoryIfDoesntExists = () => {
     if (!fs.existsSync(DATA_FOLDER_PATH)) {
         fs.mkdirSync(DATA_FOLDER_PATH);
     }

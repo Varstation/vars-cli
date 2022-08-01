@@ -3,8 +3,10 @@
 import { program } from 'commander';
 import { authenticate } from '../utils/authentication.js';
 import { getAwsCredentialsRequest, isCredentialsValid } from '../utils/aws-credentials.js';
-import { Uploader } from '../utils/upload-files.js';
+import { uploadFiles } from '../utils/upload-files.js';
 import { handleAuthenticationError, handleDefaultRequestError } from '../utils/log.js';
+import { getJson } from '../utils/functions.js';
+import { AWS_CREDENTIALS_PATH } from '../utils/constants.js';
 
 program
     .command('auth')
@@ -21,14 +23,12 @@ program
     .option('-e, --exclude <string>', 'File to exclude')
     .action((path, routineName) => {
             let credentials = getJson(AWS_CREDENTIALS_PATH);
-            if (!isCredentialsValid(credentials)) {
-                getAwsCredentialsRequest().then((credentials) => {
-                    const uploader = new Uploader(credentials, routineName);
-                    uploader.uploadFiles(path);
-                }).catch(handleDefaultRequestError);
+            if (isCredentialsValid(credentials)) {
+                uploadFiles(credentials, routineName, path);
             } else {
-                const uploader = new Uploader(credentials, routineName);
-                uploader.uploadFiles(path);
+                getAwsCredentialsRequest().then((credentials) => {
+                    uploadFiles(credentials, routineName, path);
+                }).catch(handleDefaultRequestError);
             }
 
         }
