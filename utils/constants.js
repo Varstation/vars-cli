@@ -1,6 +1,4 @@
-export const API_URL = '';
-export const HOMOLOG_URL = ''; // TODO ENVs
-export const LOCAL_URL = 'http://localhost:8000/api/';
+export const API_URL = 'http://localhost:8000/api/'; // TODO ENVs
 
 export const DATA_FOLDER_PATH = './data/'
 export const TOKEN_PATH = '.token.json';

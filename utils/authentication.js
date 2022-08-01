@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { LOCAL_URL, TOKEN_PATH } from './constants.js';
+import { API_URL, TOKEN_PATH } from './constants.js';
 import inquirer from 'inquirer';
 import { saveJson } from './functions.js';
 
 const makeAuthenticateRequest = async (email, password) => {
-    return await axios.post(`${LOCAL_URL}account/token/`, { email, password }).then(
+    return await axios.post(`${API_URL}account/token/`, { email, password }).then(
         (response) => {
             return response.data.token;
         }

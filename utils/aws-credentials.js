@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { AWS_CREDENTIALS_PATH, LOCAL_URL, TOKEN_PATH } from './constants.js';
+import { AWS_CREDENTIALS_PATH, API_URL, TOKEN_PATH } from './constants.js';
 import { getJson, saveJson } from './functions.js';
 
 export const getAwsCredentialsRequest = async () => {
     const token = getJson(TOKEN_PATH);
     return await axios.get(
-        `${LOCAL_URL}account/user/get_permission_to_upload_cli/`,
+        `${API_URL}account/user/get_permission_to_upload_cli/`,
         {
             headers: {
                 'Authorization': `Token ${token}`
