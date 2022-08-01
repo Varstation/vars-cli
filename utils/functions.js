@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { DATA_FOLDER_PATH } from './constants.js';
 
-export const getJson = (path) => {
+export const getJson = (filename) => {
+    const path = `${DATA_FOLDER_PATH}/${filename}`;
     const data = fs.existsSync(path) ? fs.readFileSync(path) : undefined;
     try {
         return JSON.parse(data);
