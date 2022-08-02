@@ -22,8 +22,6 @@ program
     .action(() => {
         changeEnvironment().then(() => {
             console.log('Environment set with success.')
-        }).catch((err) => {
-            console.log(err);
         });
     });
 
