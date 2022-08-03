@@ -2,6 +2,9 @@ import AWS from 'aws-sdk';
 import fs from 'fs';
 import { AWS_BUCKET_NAME, UPLOAD_FOLDER_NAME } from './constants.js';
 import cliProgress from 'cli-progress';
+import { merge, defer } from 'rxjs';
+
+const MAX_CONCURRENCY_FILES = 4;
 
 export class Uploader {
     constructor(credentials, routineName) {
@@ -43,7 +46,7 @@ export class Uploader {
             progressBar.update(uploadProgress);
         });
 
-        return request.promise();
+        return defer(() => request.promise());
 
     }
 
@@ -55,9 +58,11 @@ export class Uploader {
         });
 
         this.readFilesFromDir(path);
-        const filePromises = this.files.map(file => this.uploadFile(file));
-        Promise.all(filePromises).then(() => {
-            this.multiBar.stop();
+        const fileObservables = this.files.map(file => this.uploadFile(file));
+        merge(...fileObservables, MAX_CONCURRENCY_FILES).subscribe({
+            complete: () => {
+                this.multiBar.stop();
+            }
         })
     }
 }
