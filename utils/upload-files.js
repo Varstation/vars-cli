@@ -18,13 +18,17 @@ export class Uploader {
         this.files = [];
     }
 
-    readFilesFromDir(path) {
-        fs.readdirSync(path).forEach((fileName) => {
+    readFilesFromDir(path, filesToExclude) {
+        fs.readdirSync(path).filter(
+            (fileName) => {
+                return !filesToExclude.includes(fileName);
+            }
+        ).forEach((fileName) => {
             const fileStats = fs.statSync(`${path}/${fileName}`);
             this.files.push({
                 name: fileName,
                 content: fs.createReadStream(`${path}/${fileName}`),
-                size: fileStats.size,
+                size: fileStats.size
             });
         });
     }
@@ -34,11 +38,11 @@ export class Uploader {
         const request = this.s3Client.upload({
             Bucket: AWS_BUCKET_NAME,
             Key: filePath,
-            Body: file.content,
+            Body: file.content
         });
 
         const progressBar = this.multiBar.create(100, 0, {
-            filename: file.name,
+            filename: file.name
         });
 
         request.on('httpUploadProgress', (progress) => {
@@ -50,24 +54,24 @@ export class Uploader {
 
     }
 
-    uploadFiles(path) {
+    uploadFiles(path, filesToExclude) {
         this.multiBar = new cliProgress.MultiBar({
             format: '{filename} [{bar}] {percentage}% | ETA: {eta}s | {value}% / {total}%',
             clearOnComplete: false,
-            hideCursor: false,
+            hideCursor: false
         });
 
-        this.readFilesFromDir(path);
+        this.readFilesFromDir(path, filesToExclude);
         const fileObservables = this.files.map(file => this.uploadFile(file));
         merge(...fileObservables, MAX_CONCURRENCY_FILES).subscribe({
             complete: () => {
                 this.multiBar.stop();
             }
-        })
+        });
     }
 }
 
-export const uploadFiles = (credentials, routineName, path) => {
+export const uploadFiles = (credentials, routineName, path, filesToExclude) => {
     const uploader = new Uploader(credentials, routineName);
-    uploader.uploadFiles(path);
-}
+    uploader.uploadFiles(path, filesToExclude);
+};

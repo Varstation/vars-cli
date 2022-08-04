@@ -21,7 +21,7 @@ program
     .description('Change Varstation environment')
     .action(() => {
         changeEnvironment().then(() => {
-            console.log('Environment set with success.')
+            console.log('Environment set with success.');
         });
     });
 
@@ -31,14 +31,14 @@ program
     .description('Upload the files of a routine into AWS bucket')
     .argument('Path', 'Path of the directory with the routine')
     .argument('Routine name', 'Name of the routine')
-    .option('-e, --exclude <string>', 'File to exclude')
-    .action((path, routineName) => {
+    .option('-e, --exclude [string...]', 'Files inside routine folder to exclude')
+    .action((path, routineName, options) => {
             let credentials = getJson(AWS_CREDENTIALS_PATH);
             if (isCredentialsValid(credentials)) {
-                uploadFiles(credentials, routineName, path);
+                uploadFiles(credentials, routineName, path, options['exclude']);
             } else {
                 getAwsCredentialsRequest().then((credentials) => {
-                    uploadFiles(credentials, routineName, path);
+                    uploadFiles(credentials, routineName, path, options['exclude']);
                 }).catch(handleDefaultRequestError);
             }
 
