@@ -20,9 +20,7 @@ export class Uploader {
 
     readFilesFromDir(path, filesToExclude) {
         fs.readdirSync(path).filter(
-            (fileName) => {
-                return !filesToExclude.includes(fileName);
-            }
+            (fileName) => !filesToExclude.includes(fileName),
         ).forEach((fileName) => {
             const fileStats = fs.statSync(`${path}/${fileName}`);
             this.files.push({
