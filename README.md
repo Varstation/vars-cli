@@ -8,7 +8,7 @@ A CLI to interact with Varsomics infrastructure
 
 First you'll need to have node and npm installed.
 
-This project was generated with version 14.15 of Node
+This project was generated with version 14.15 of Node.
 
 To install it, follow the following steps:
 
