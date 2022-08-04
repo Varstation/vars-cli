@@ -3,7 +3,7 @@ export const logFailedRequest = () => {
 };
 
 export const handleDefaultRequestError = (errorRequest) => {
-    if (errorRequest.response.status === 401) {
+    if (errorRequest?.response?.status === 401) {
         console.log('You must authenticate to your Varstation account before using this command. Run `vars-cli auth` to authenticate.');
         process.exit();
     } else {
