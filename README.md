@@ -30,12 +30,6 @@ Run `npm install -g vars-cli`
 
 There are a few important commands when using this CLI:
 
-### Changing environment (`vars-cli env`)
-
-By default, all the actions will be performed on our production infrastructure. However, you can
-choose to make your actions on other environments if necessary. Use this command to change to the
-environments you want.
-
 ### Authenticating (`vars-cli auth`)
 
 To perform any action, you must be authenticated. You'll use your varstation account credentials
@@ -43,7 +37,7 @@ to authenticate.
 
 ### Uploading a Routine (`vars-cli upload_routine <directory_path> <routine_name>`)
 
-With this command you will upload the files from a local directory into our S3 bucket. Ir requires the 
+With this command you will upload the files from a local directory into our S3 bucket. It requires the 
 following arguments:
 - directory_path -> The path to the directory  where the files are located.
 - routine_name -> The name of the routine that will be created in Varstation afterwards.
@@ -53,3 +47,9 @@ The are also some optionals arguments:
 
 Example:
 `vars-cli upload_routine ../upload_routine_directory/ MY_TSO_ROUTINE --exclude boring_file.fastq`
+
+### [Development Only] Changing environment (`vars-cli env`)
+
+By default, all the actions will be performed on our production infrastructure. However, you can
+choose to make your actions on other environments if necessary. Use this command to change to the
+environments you want.
