@@ -17,8 +17,7 @@ const makeUserDetailRequest = async (userId, token) => {
             headers: {
                 'Authorization': `Token ${token}`
             }
-        }).then(
-        (response) => {
+        }).then((response) => {
             return response.data;
         }
     );
