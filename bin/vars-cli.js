@@ -36,10 +36,10 @@ program
         const authInfo = getJson(AUTH_PATH);
         let credentials = getJson(AWS_CREDENTIALS_PATH);
             if (isCredentialsValid(credentials)) {
-                uploadFiles(credentials, routineName, path, authInfo?.user?.organization?.name, options['exclude']);
+                uploadFiles(credentials, routineName, path, authInfo?.user.organization.name, options['exclude']);
             } else {
                 getAwsCredentialsRequest().then((credentials) => {
-                    uploadFiles(credentials, routineName, path, authInfo?.user?.organization?.name, options['exclude']);
+                    uploadFiles(credentials, routineName, path, authInfo?.user.organization.name, options['exclude']);
                 }).catch(handleDefaultRequestError);
             }
 
