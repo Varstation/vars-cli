@@ -19,20 +19,30 @@ export class Uploader {
     }
 
     readFilesFromDir(path, filesToExclude) {
-        fs.readdirSync(path).filter(
-            (fileName) => !filesToExclude.includes(fileName),
-        ).forEach((fileName) => {
-            const fileStats = fs.statSync(`${path}/${fileName}`);
-            this.files.push({
-                name: fileName,
-                content: fs.createReadStream(`${path}/${fileName}`),
-                size: fileStats.size
+        try {
+            fs.readdirSync(path).filter(
+                (fileName) => !filesToExclude.includes(fileName),
+            ).forEach((fileName) => {
+                const fileStats = fs.statSync(`${path}/${fileName}`);
+                this.files.push({
+                    name: fileName,
+                    content: fs.createReadStream(`${path}/${fileName}`),
+                    size: fileStats.size
+                });
             });
-        });
+        } catch (err) {
+            if (err.code === 'ENOENT') {
+                console.log('Could not find files. Please check you path.');
+                console.log(err.message);
+            } else {
+                throw err;
+            }
+        }
+
     }
 
-    uploadFile(file) {
-        const filePath = `${UPLOAD_FOLDER_NAME}/${this.routineName}/${file.name}`;
+    uploadFile(file, organizationName) {
+        const filePath = `${UPLOAD_FOLDER_NAME}/${organizationName}/${this.routineName}/${file.name}`;
         const request = this.s3Client.upload({
             Bucket: AWS_BUCKET_NAME,
             Key: filePath,
@@ -52,7 +62,7 @@ export class Uploader {
 
     }
 
-    uploadFiles(path, filesToExclude) {
+    uploadFiles(path, organizationName, filesToExclude) {
         this.multiBar = new cliProgress.MultiBar({
             format: '{filename} [{bar}] {percentage}% | ETA: {eta}s | {value}% / {total}%',
             clearOnComplete: false,
@@ -60,7 +70,7 @@ export class Uploader {
         });
 
         this.readFilesFromDir(path, filesToExclude);
-        const fileObservables = this.files.map(file => this.uploadFile(file));
+        const fileObservables = this.files.map(file => this.uploadFile(file, organizationName));
         merge(...fileObservables, MAX_CONCURRENCY_FILES).subscribe({
             complete: () => {
                 this.multiBar.stop();
@@ -69,7 +79,7 @@ export class Uploader {
     }
 }
 
-export const uploadFiles = (credentials, routineName, path, filesToExclude) => {
+export const uploadFiles = (credentials, routineName, path, organizationName, filesToExclude) => {
     const uploader = new Uploader(credentials, routineName);
-    uploader.uploadFiles(path, filesToExclude);
+    uploader.uploadFiles(path, organizationName, filesToExclude);
 };
