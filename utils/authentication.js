@@ -1,15 +1,29 @@
 import axios from 'axios';
-import { API_URL, TOKEN_PATH } from './constants.js';
+import { API_URL, AUTH_PATH } from './constants.js';
 import inquirer from 'inquirer';
 import { saveJson } from './functions.js';
 
 const makeAuthenticateRequest = async (email, password) => {
     return await axios.post(`${API_URL}account/token/`, { email, password }).then(
         (response) => {
-            return response.data.token;
+            return response.data;
         }
     );
 };
+
+const makeUserDetailRequest = async (userId, token) => {
+    return await axios.get(`${API_URL}account/user/${userId}`,
+        {
+            headers: {
+                'Authorization': `Token ${token}`
+            }
+        }).then(
+        (response) => {
+            return response.data;
+        }
+    );
+}
+
 
 export const authenticate = async () => {
     const answers = await inquirer.prompt([
@@ -25,7 +39,12 @@ export const authenticate = async () => {
             message: 'Type your password:'
         }
     ]);
-    const token = await makeAuthenticateRequest(answers.email, answers.password);
-    saveJson(TOKEN_PATH, token);
-    return token;
+    const data = await makeAuthenticateRequest(answers.email, answers.password);
+    const user = await makeUserDetailRequest(data.user.id, data.token);
+    const authInfo = {
+        token: data.token,
+        user,
+    };
+    saveJson(AUTH_PATH, authInfo);
+    return authInfo;
 };

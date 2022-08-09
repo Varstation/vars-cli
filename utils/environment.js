@@ -1,6 +1,7 @@
+import fs from 'fs';
 import inquirer from 'inquirer';
 import { getJson, saveJson } from './functions.js';
-import { ENVIRONMENT_SELECTION_PATH } from './constants.js';
+import { AUTH_PATH, AWS_CREDENTIALS_PATH, DATA_FOLDER_PATH, ENVIRONMENT_SELECTION_PATH } from './constants.js';
 
 const LOCAL_URL = 'http://localhost:8000/api/';
 const HOMOLOG_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api';
@@ -41,4 +42,12 @@ export const changeEnvironment = async () => {
         }
     ]);
     saveJson(ENVIRONMENT_SELECTION_PATH, environment);
+    clearFile(AWS_CREDENTIALS_PATH);
+    clearFile(AUTH_PATH);
 };
+
+const clearFile = (fileName) => {
+    if (fs.existsSync(`${DATA_FOLDER_PATH}/${fileName}`)) {
+        fs.unlinkSync(`${DATA_FOLDER_PATH}/${fileName}`);
+    }
+}

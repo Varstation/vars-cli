@@ -1,7 +1,7 @@
 import { getApiUrl } from './environment.js';
 
 export const DATA_FOLDER_PATH = './data/'
-export const TOKEN_PATH = '.token.json';
+export const AUTH_PATH = '.auth.json';
 export const AWS_CREDENTIALS_PATH = '.temp_credentials.json';
 export const ENVIRONMENT_SELECTION_PATH = '.environment.json';
 
