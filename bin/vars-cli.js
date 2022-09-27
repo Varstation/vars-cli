@@ -8,6 +8,8 @@ import { handleAuthenticationError, handleDefaultRequestError } from '../utils/l
 import { getJson } from '../utils/functions.js';
 import { AUTH_PATH, AWS_CREDENTIALS_PATH } from '../utils/constants.js';
 import { changeEnvironment } from '../utils/environment.js';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 program
     .command('auth')
@@ -47,4 +49,5 @@ program
     );
 
 
-program.version('1.0.1').parse(program.argv);
+const pkg = require('../package.json');
+program.version(pkg.version).parse(program.argv);
