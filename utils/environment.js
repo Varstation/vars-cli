@@ -6,6 +6,9 @@ import { AUTH_PATH, AWS_CREDENTIALS_PATH, DATA_FOLDER_PATH, ENVIRONMENT_SELECTIO
 const LOCAL_URL = 'http://localhost:8000/api/';
 const HOMOLOG_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api/';
 const PRODUCTION_URL = 'https://nikjpbtd5h.execute-api.us-east-1.amazonaws.com/api/';
+const AWS_PRODUCTION_BUCKET_NAME = 'vars-static-prod';
+const AWS_HOMOLOG_BUCKET_NAME = 'vars-static-homolog';
+const AWS_DEVELOPMENT_BUCKET_NAME = 'varstation-static-development';
 
 export const ENVIRONMENTS_OPTIONS = Object.freeze({
     PRODUCTION: '[Default] Production',
@@ -13,17 +16,17 @@ export const ENVIRONMENTS_OPTIONS = Object.freeze({
     LOCAL_DEVELOPMENT: 'Local Development',
 });
 
-export const getApiUrl = () => {
+export const getConstants = () => {
     const environment = getJson(ENVIRONMENT_SELECTION_PATH);
     switch (environment) {
         case ENVIRONMENTS_OPTIONS.PRODUCTION:
-            return PRODUCTION_URL;
+            return [PRODUCTION_URL, AWS_PRODUCTION_BUCKET_NAME];
         case ENVIRONMENTS_OPTIONS.HOMOLOG:
-            return HOMOLOG_URL;
+            return [HOMOLOG_URL, AWS_HOMOLOG_BUCKET_NAME];
         case ENVIRONMENTS_OPTIONS.LOCAL_DEVELOPMENT:
-            return LOCAL_URL;
+            return [LOCAL_URL, AWS_DEVELOPMENT_BUCKET_NAME];
         default:
-            return PRODUCTION_URL;
+            return [PRODUCTION_URL, AWS_PRODUCTION_BUCKET_NAME];
     }
 }
 
