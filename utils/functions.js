@@ -24,8 +24,7 @@ const createDataDirectoryIfDoesntExists = () => {
     }
 };
 
-export const start_process = async (filePath) => {
-    const token = getJson(AUTH_PATH)?.token;
+export const start_process = async (filePath, token) => {
     const csvFile = fs.createReadStream(filePath)
     try {
         await axios.post(
@@ -37,7 +36,6 @@ export const start_process = async (filePath) => {
                 // csvFile,
             }).then(
             (response) => {
-                console.log(response.data)
                 return response.data
             })
     } catch (error) {
