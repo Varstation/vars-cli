@@ -5,7 +5,8 @@ import { authenticate } from '../utils/authentication.js';
 import { getAwsCredentialsRequest, isCredentialsValid } from '../utils/aws-credentials.js';
 import { uploadFiles } from '../utils/upload-files.js';
 import { handleAuthenticationError, handleDefaultRequestError } from '../utils/log.js';
-import { getJson } from '../utils/functions.js';
+import { getJson, start_process } from '../utils/functions.js';
+
 import { AUTH_PATH, AWS_CREDENTIALS_PATH } from '../utils/constants.js';
 import { changeEnvironment } from '../utils/environment.js';
 import { createRequire } from 'module';
@@ -47,6 +48,21 @@ program
 
         }
     );
+
+program
+    .command('start_process')
+    .description('Starts the process of the Routine')
+    .argument('csv file', 'Path of the directory csv')
+    .action((filePath) => {
+        const token = getJson(AUTH_PATH)?.token;
+            if (token) {
+                start_process(filePath)
+            } else {
+                authenticate().catch(handleAuthenticationError).then(() => {
+                    start_process(filePath)
+                });
+            }
+    });
 
 
 const pkg = require('../package.json');
