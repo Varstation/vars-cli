@@ -50,16 +50,16 @@ program
     );
 
 program
-    .command('start_process')
+    .command('start_processing')
     .description('Starts the process of the Routine')
     .argument('csv file', 'Path of the directory csv')
     .action((filePath) => {
         const token = getJson(AUTH_PATH)?.token;
             if (token) {
-                start_process(filePath)
+                start_process(filePath, token)
             } else {
-                authenticate().catch(handleAuthenticationError).then(() => {
-                    start_process(filePath)
+                authenticate().catch(handleAuthenticationError).then((authInfo) => {
+                    start_process(filePath, authInfo.token)
                 });
             }
     });
