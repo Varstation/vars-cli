@@ -24,16 +24,20 @@ const createDataDirectoryIfDoesntExists = () => {
     }
 };
 
+export const isCsvFile = (filePath) => {
+    return filePath.split('.').pop() === 'csv'
+}
+
 export const start_process = async (filePath, token) => {
-    const csvFile = fs.createReadStream(filePath)
+    const csvFile = fs.readFileSync(filePath)
     try {
         await axios.post(
             `${API_URL}sample/teste/`,
+            {data: csvFile},
             {
                 headers: {
                     'Authorization': `Token ${token}`,
                 },
-                // csvFile,
             }).then(
             (response) => {
                 return response.data
