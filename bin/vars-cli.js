@@ -5,7 +5,7 @@ import { authenticate } from '../utils/authentication.js';
 import { getAwsCredentialsRequest, isCredentialsValid } from '../utils/aws-credentials.js';
 import { uploadFiles } from '../utils/upload-files.js';
 import { handleAuthenticationError, handleDefaultRequestError } from '../utils/log.js';
-import { getJson, start_process } from '../utils/functions.js';
+import { getJson, isCsvFile, start_process } from '../utils/functions.js';
 
 import { AUTH_PATH, AWS_CREDENTIALS_PATH } from '../utils/constants.js';
 import { changeEnvironment } from '../utils/environment.js';
@@ -54,14 +54,18 @@ program
     .description('Starts the process of the Routine')
     .argument('csv file', 'Path of the directory csv')
     .action((filePath) => {
-        const token = getJson(AUTH_PATH)?.token;
-            if (token) {
-                start_process(filePath, token)
-            } else {
-                authenticate().catch(handleAuthenticationError).then((authInfo) => {
-                    start_process(filePath, authInfo.token)
-                });
-            }
+        if (isCsvFile(filePath)) {
+            const token = getJson(AUTH_PATH)?.token;
+                if (token) {
+                    start_process(filePath, token)
+                } else {
+                    authenticate().catch(handleAuthenticationError).then((authInfo) => {
+                        start_process(filePath, authInfo.token)
+                    });
+                }
+        } else {
+            console.log(`${filePath} is not a csv file`)
+        }
     });
 
 
