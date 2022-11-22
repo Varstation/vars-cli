@@ -59,10 +59,10 @@ program
             token ? start_process(filePath, token) : authenticate()
                 .catch(handleAuthenticationError)
                 .then((authInfo) => {
-                    start_process(filePath, authInfo.token)
-                });
+                        start_process(filePath, authInfo.token)
+                    });
         } else {
-            console.log(`${filePath} is not a csv file`)
+            return console.log(`${filePath} is not a csv file`)
         }
     });
 
