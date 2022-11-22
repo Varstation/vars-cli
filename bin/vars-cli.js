@@ -56,13 +56,11 @@ program
     .action((filePath) => {
         if (isCsvFile(filePath)) {
             const token = getJson(AUTH_PATH)?.token;
-                if (token) {
-                    start_process(filePath, token)
-                } else {
-                    authenticate().catch(handleAuthenticationError).then((authInfo) => {
-                        start_process(filePath, authInfo.token)
-                    });
-                }
+            token ? start_process(filePath, token) : authenticate()
+                .catch(handleAuthenticationError)
+                .then((authInfo) => {
+                    start_process(filePath, authInfo.token)
+                });
         } else {
             console.log(`${filePath} is not a csv file`)
         }
