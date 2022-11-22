@@ -1,7 +1,7 @@
+import FormData from 'form-data';
 import fs from 'fs';
-import axios from 'axios';
 import { DATA_FOLDER_PATH } from './constants.js';
-import { AUTH_PATH, API_URL } from './constants.js';
+import { API_URL } from './constants.js';
 
 export const getJson = (filename) => {
     const path = `${DATA_FOLDER_PATH}/${filename}`;
@@ -28,24 +28,21 @@ export const isCsvFile = (filePath) => {
     return filePath.split('.').pop() === 'csv'
 }
 
-export const start_process = async (filePath, token) => {
-    const csvFile = fs.readFileSync(filePath)
-    try {
-        await axios.post(
-            `${API_URL}sample/teste/`,
-            {data: csvFile},
-            {
-                headers: {
-                    'Authorization': `Token ${token}`,
-                },
-            }).then(
-            (response) => {
-                return response.data
-            })
-    } catch (error) {
-        const err = error
-        if (err.response) {
-           console.log(err.response.status, err.response.statusText, err.response.data)
-        }
-     }
+export const start_process = (filePath, token) => {
+    const csvFile = fs.createReadStream(filePath);
+
+    let formData = new FormData();
+    formData.append('file', csvFile, 'file.csv');
+
+    const params = new URL(`${API_URL}sample/teste/`);
+
+    formData.submit({
+        port: params.port,
+        path: params.pathname,
+        host: params.hostname,
+        protocol: params.protocol,
+        headers: { 'Authorization': `Token ${token}` }
+    }, (err, response) => {
+        err ?  console.log(err) : console.log(response.statusCode);
+    });
 }
