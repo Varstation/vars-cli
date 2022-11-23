@@ -62,7 +62,7 @@ program
                         start_process(filePath, authInfo.token)
                     });
         } else {
-            return console.log(`${filePath} is not a csv file`)
+            return console.log(`${filePath} is not a csv file, please try again with an csv file.`)
         }
     });
 
