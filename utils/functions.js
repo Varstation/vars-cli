@@ -28,10 +28,10 @@ export const isCsvFile = (filePath) => {
     return filePath.split('.').pop() === 'csv'
 }
 
-export const start_process = (filePath, token) => {
+export const startProcess = (filePath, token) => {
     const csvFile = fs.createReadStream(filePath);
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('file', csvFile, 'file.csv');
 
     const params = new URL(`${API_URL}routine/csv/create_and_execute/`);
