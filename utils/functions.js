@@ -25,14 +25,14 @@ const createDataDirectoryIfDoesntExists = () => {
 };
 
 export const isCsvFile = (filePath) => {
-    return filePath.split('.').pop() === 'csv'
+    return filePath.split('.').pop() === 'csv';
 }
 
 export const startProcess = (filePath, token) => {
     const csvFile = fs.createReadStream(filePath);
 
     const formData = new FormData();
-    formData.append('file', csvFile, 'file.csv');
+    formData.append('file', csvFile, 'routines_to_create_samplesheet.csv');
 
     const params = new URL(`${API_URL}routine/csv/create_and_execute/`);
 
