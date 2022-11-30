@@ -34,7 +34,7 @@ export const start_process = (filePath, token) => {
     let formData = new FormData();
     formData.append('file', csvFile, 'file.csv');
 
-    const params = new URL(`${API_URL}sample/teste/`);
+    const params = new URL(`${API_URL}routine/csv/create_and_execute/`);
 
     formData.submit({
         port: params.port,
@@ -43,6 +43,6 @@ export const start_process = (filePath, token) => {
         protocol: params.protocol,
         headers: { 'Authorization': `Token ${token}` }
     }, (err, response) => {
-        err ?  console.log(err) : console.log(response.statusCode);
+        err ?  console.log(err) : console.log(response.statusCode, response.statusMessage);
     });
 }
