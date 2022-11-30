@@ -59,7 +59,7 @@ program
             token ? startProcess(filePath, token) : authenticate()
                 .catch(handleAuthenticationError)
                 .then((authInfo) => {
-                        startProcess(filePath, authInfo.token)
+                        startProcess(filePath, authInfo.token);
                     });
         } else {
             return console.log(`${filePath} is not a csv file, please try again with an csv file.`)
