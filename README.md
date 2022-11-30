@@ -48,12 +48,12 @@ The are also some optionals arguments:
 Example:
 `vars-cli upload_routine ../upload_routine_directory/ MY_TSO_ROUTINE --exclude boring_file.fastq`
 
-### Starting the Routine processing (`vars-cli start_processing <directory_path>`)
+### Starting the Routine processing (`vars-cli start_processing <csv_file_path>`)
 
 With this command you will start the processing of the provided Routine. It requires the 
 following arguments:
 
-- directory_path -> The path to the directory where the csv file are located.
+- csv_file_path -> The path to the directory where the csv file are located.
 
 ### [Development Only] Changing environment (`vars-cli env`)
 
