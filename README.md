@@ -53,7 +53,7 @@ Example:
 With this command you will start the processing of the provided Routine. It requires the 
 following arguments:
 
-- csv_file_path -> The path to the directory where the csv file are located.
+- csv_file_path -> The path to where the csv file are located.
 
 ### [Development Only] Changing environment (`vars-cli env`)
 
