@@ -30,7 +30,7 @@ Run `npm install -g vars-cli`
 
 There are a few important commands when using this CLI:
 
-### Authenticating (`vars-cli auth`)
+### Authenticating (`sudo vars-cli auth`)
 
 To perform any action, you must be authenticated. You'll use your varstation account credentials
 to authenticate.
@@ -55,7 +55,7 @@ following arguments:
 
 - csv_file_path -> The path to where the csv file are located.
 
-### [Development Only] Changing environment (`vars-cli env`)
+### [Development Only] Changing environment (`sudo vars-cli env`)
 
 By default, all the actions will be performed on our production infrastructure. However, you can
 choose to make your actions on other environments if necessary. Use this command to change to the
