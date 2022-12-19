@@ -60,3 +60,10 @@ following arguments:
 By default, all the actions will be performed on our production infrastructure. However, you can
 choose to make your actions on other environments if necessary. Use this command to change to the
 environments you want.
+
+## Deploy
+
+At each deploy, you must:
+1) Change the `version` attribute in the `package.json` file.
+2) Log with `varsomics` and `operation@varsomics.com` (check password on our passwords sheet) using the command `npm login`. You are going to have to open that email for MFA.
+3) Apply `npm publish`
