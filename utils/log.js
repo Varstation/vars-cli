@@ -18,6 +18,8 @@ export const handleAuthenticationError = (errorRequest) => {
         console.log('Unable to authenticate. Check your email and password.');
     } else {
         console.log(errorRequest);
+        console.log(errorRequest?.response?.data.nonFieldErrors);
+        console.log(errorRequest?.data.nonFieldErrors);
         logFailedRequest();
         process.exit();
     }
