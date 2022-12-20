@@ -7,6 +7,7 @@ export const handleDefaultRequestError = (errorRequest) => {
         console.log('You must authenticate to your Varstation account before using this command. Run `vars-cli auth` to authenticate.');
         process.exit();
     } else {
+        console.log(errorRequest);
         logFailedRequest();
         process.exit();
     }
@@ -16,6 +17,7 @@ export const handleAuthenticationError = (errorRequest) => {
     if (errorRequest.response?.data?.non_field_errors) {
         console.log('Unable to authenticate. Check your email and password.');
     } else {
+        console.log(errorRequest);
         logFailedRequest();
         process.exit();
     }
