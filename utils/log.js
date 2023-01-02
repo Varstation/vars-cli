@@ -1,4 +1,10 @@
+import {saveJson, saveString} from './functions.js';
+import {ERROR_PATH} from './constants.js';
+
 export const logFailedRequest = (errorRequest) => {
+    const timestamp = new Date();
+    saveString(ERROR_PATH, `\n---------------------------- ${timestamp} --------------------------\n`, true);
+    saveJson(ERROR_PATH, errorRequest, true);
     console.log('The request failed. Please, try again later. If the error processed to keep happening, please contact our support.');
 };
 
