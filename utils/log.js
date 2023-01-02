@@ -23,7 +23,10 @@ export const handleGenericError = (error) => {
     const timestamp = new Date();
     appendStringToFile(ERROR_PATH, `\n---------------------------- ${timestamp} --------------------------\n`);
     appendStringToFile(ERROR_PATH, parseErrorMessage(error));
-    console.log('The request failed. Please, try again later. If the error processed to keep happening, please contact our support.');
+    console.log(
+        'The request failed. Please, try again later. If the error processed to keep happening, please contact our' +
+        ' support. For logs, check data/.error.txt',
+    );
     process.exit();
 }
 
@@ -32,7 +35,7 @@ const parseErrorMessage = (error) => {
         return error.stack;
     }
     if (typeof error === 'object') {
-        return parseJson(error)
+        return parseJson(error.response?.data ?? error);
     }
     return error;
 }
