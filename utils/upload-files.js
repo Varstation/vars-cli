@@ -3,6 +3,7 @@ import fs from 'fs';
 import { AWS_BUCKET_NAME, UPLOAD_FOLDER_NAME } from './constants.js';
 import cliProgress from 'cli-progress';
 import { merge, defer } from 'rxjs';
+import {handleGenericError} from './log.js';
 
 const MAX_CONCURRENCY_FILES = 4;
 
@@ -80,6 +81,10 @@ export class Uploader {
 }
 
 export const uploadFiles = (credentials, routineName, path, organizationName, filesToExclude) => {
-    const uploader = new Uploader(credentials, routineName);
-    uploader.uploadFiles(path, organizationName, filesToExclude);
+    try {
+        const uploader = new Uploader(credentials, routineName);
+        uploader.uploadFiles(path, organizationName, filesToExclude);
+    } catch (error) {
+        handleGenericError(error);
+    }
 };

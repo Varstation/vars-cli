@@ -2,6 +2,7 @@ import FormData from 'form-data';
 import fs from 'fs';
 import { DATA_FOLDER_PATH } from './constants.js';
 import { API_URL } from './constants.js';
+import { handleDefaultRequestError } from './log.js';
 
 export const getJson = (filename) => {
     const path = `${DATA_FOLDER_PATH}/${filename}`;
@@ -55,6 +56,7 @@ export const startProcess = (filePath, token) => {
         protocol: params.protocol,
         headers: { 'Authorization': `Token ${token}` }
     }, (err, response) => {
-        err ?  console.log(err) : console.log(response.statusCode, response.statusMessage);
+        const errorMessage = err ?? `${response.statusCode}  ${response.statusMessage}`;
+        handleDefaultRequestError(errorMessage);
     });
 }

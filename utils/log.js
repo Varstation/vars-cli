@@ -31,11 +31,11 @@ export const handleGenericError = (error) => {
 }
 
 const parseErrorMessage = (error) => {
-    if (error.stack) {
+    if (error?.stack) {
         return error.stack;
     }
     if (typeof error === 'object') {
-        return parseJson(error.response?.data ?? error);
+        return parseJson(error?.response?.data ?? error);
     }
     return error;
 }
