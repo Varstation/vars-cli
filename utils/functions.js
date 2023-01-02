@@ -2,6 +2,7 @@ import FormData from 'form-data';
 import fs from 'fs';
 import { DATA_FOLDER_PATH } from './constants.js';
 import { API_URL } from './constants.js';
+import { handleDefaultRequestError } from './log.js';
 
 export const getJson = (filename) => {
     const path = `${DATA_FOLDER_PATH}/${filename}`;
@@ -13,10 +14,22 @@ export const getJson = (filename) => {
     }
 };
 
+export const appendStringToFile = (filename, data) => {
+    createDataDirectoryIfDoesntExists();
+    fs.appendFileSync(`${DATA_FOLDER_PATH}/${filename}`, data);
+}
+
+
 export const saveJson = (filename, data) => {
     createDataDirectoryIfDoesntExists();
-    fs.writeFileSync(`${DATA_FOLDER_PATH}/${filename}`, JSON.stringify(data, null, '\t'));
+    fs.writeFileSync(`${DATA_FOLDER_PATH}/${filename}`, parseJson(data));
 };
+
+
+export const parseJson = (data) => {
+    return JSON.stringify(data, null, '\t');
+}
+
 
 const createDataDirectoryIfDoesntExists = () => {
     if (!fs.existsSync(DATA_FOLDER_PATH)) {
@@ -43,6 +56,7 @@ export const startProcess = (filePath, token) => {
         protocol: params.protocol,
         headers: { 'Authorization': `Token ${token}` }
     }, (err, response) => {
-        err ?  console.log(err) : console.log(response.statusCode, response.statusMessage);
+        const errorMessage = err ?? `${response.statusCode}  ${response.statusMessage}`;
+        handleDefaultRequestError(errorMessage);
     });
 }

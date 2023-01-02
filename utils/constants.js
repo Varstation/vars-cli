@@ -13,3 +13,5 @@ export const ENVIRONMENT_SELECTION_PATH = '.environment.json';
 export const UPLOAD_FOLDER_NAME = 'vars-cli-uploads';
 
 export const [API_URL, AWS_BUCKET_NAME] = getConstants();
+
+export const ERROR_PATH = '.error.txt';
