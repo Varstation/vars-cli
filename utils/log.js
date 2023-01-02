@@ -1,5 +1,5 @@
-import {saveJson, appendStringToFile, parseJson} from './functions.js';
-import {ERROR_PATH} from './constants.js';
+import { appendStringToFile, parseJson } from './functions.js';
+import { ERROR_PATH } from './constants.js';
 
 
 export const handleDefaultRequestError = (errorRequest) => {

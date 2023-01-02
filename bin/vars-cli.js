@@ -4,7 +4,7 @@ import { program } from 'commander';
 import { authenticate } from '../utils/authentication.js';
 import { getAwsCredentialsRequest, isCredentialsValid } from '../utils/aws-credentials.js';
 import { uploadFiles } from '../utils/upload-files.js';
-import {handleAuthenticationError, handleDefaultRequestError, handleGenericError} from '../utils/log.js';
+import { handleAuthenticationError, handleDefaultRequestError, handleGenericError } from '../utils/log.js';
 import { getJson, isCsvFile, startProcess } from '../utils/functions.js';
 
 import { AUTH_PATH, AWS_CREDENTIALS_PATH } from '../utils/constants.js';
