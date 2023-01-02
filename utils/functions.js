@@ -13,22 +13,22 @@ export const getJson = (filename) => {
     }
 };
 
-export const saveString = (filename, data, append) => {
+export const appendStringToFile = (filename, data) => {
     createDataDirectoryIfDoesntExists();
-    const fileFunction = getSaveFileFunction(append);
-    fileFunction(`${DATA_FOLDER_PATH}/${filename}`, data);
+    fs.appendFileSync(`${DATA_FOLDER_PATH}/${filename}`, data);
 }
 
 
-export const saveJson = (filename, data, append) => {
+export const saveJson = (filename, data) => {
     createDataDirectoryIfDoesntExists();
-    const fileFunction = getSaveFileFunction(append);
-    fileFunction(`${DATA_FOLDER_PATH}/${filename}`, JSON.stringify(data, null, '\t'));
+    fs.writeFileSync(`${DATA_FOLDER_PATH}/${filename}`, parseJson(data));
 };
 
-const getSaveFileFunction = (append) => {
-    return append ? fs.appendFileSync : fs.writeFileSync;
+
+export const parseJson = (data) => {
+    return JSON.stringify(data, null, '\t');
 }
+
 
 const createDataDirectoryIfDoesntExists = () => {
     if (!fs.existsSync(DATA_FOLDER_PATH)) {
