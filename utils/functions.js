@@ -1,8 +1,8 @@
 import FormData from 'form-data';
 import fs from 'fs';
-import { DATA_FOLDER_PATH } from './constants.js';
-import { API_URL } from './constants.js';
-import { handleGenericError } from './log.js';
+import {DATA_FOLDER_PATH} from './constants.js';
+import {API_URL} from './constants.js';
+import {handleGenericError} from './log.js';
 
 export const getJson = (filename) => {
     const path = `${DATA_FOLDER_PATH}/${filename}`;
@@ -54,13 +54,18 @@ export const startProcess = (filePath, token) => {
         path: params.pathname,
         host: params.hostname,
         protocol: params.protocol,
-        headers: { 'Authorization': `Token ${token}` }
+        headers: {'Authorization': `Token ${token}`}
     }, (err, response) => {
-        const message = err ?? `${response.statusCode}  ${response.statusMessage}`;
-        if (err || response?.statusCode >= 200 && response?.statusCode < 300) {
-            console.log(message);
-        } else {
-            handleGenericError(message);
-        }
+        logResponse(response);
+    });
+}
+
+const logResponse = (response) => {
+    let body = '';
+    response.on('data', (chunk) => {
+        body += chunk;
+    });
+    response.on('end', () => {
+        console.log(body);
     });
 }
