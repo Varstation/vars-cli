@@ -1,6 +1,6 @@
 {
     "name": "vars-cli",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "A CLI to interact with Varsomics infrastructure",
     "main": "index.js",
     "bin": "./bin/vars-cli.js",
@@ -14,6 +14,7 @@
         "commander": "^9.4.0",
         "form-data": "^4.0.0",
         "inquirer": "^9.0.2",
-        "rxjs": "^7.5.6"
+        "rxjs": "^7.5.6",
+        "xml2js": "^0.6.2"
     }
 }
