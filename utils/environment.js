@@ -4,15 +4,22 @@ import { getJson, saveJson } from './functions.js';
 import { AUTH_PATH, AWS_CREDENTIALS_PATH, DATA_FOLDER_PATH, ENVIRONMENT_SELECTION_PATH } from './constants.js';
 
 const LOCAL_URL = 'http://localhost:8000/api/';
-const HOMOLOG_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api/';
+const DEVELOPMENT_URL = 'https://api.development.varstation.varsomics-sandbox.com/api/';
+const OLD_HOMOLOG_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api/';
+const HOMOLOG_URL = 'https://api.homologation.varstation.varsomics-sandbox.com/api/';
 const PRODUCTION_URL = 'https://nikjpbtd5h.execute-api.us-east-1.amazonaws.com/api/';
 const AWS_PRODUCTION_BUCKET_NAME = 'vars-static-prod';
-const AWS_HOMOLOG_BUCKET_NAME = 'vars-static-homolog';
-const AWS_DEVELOPMENT_BUCKET_NAME = 'varstation-static-development';
+const AWS_OLD_HOMOLOG_BUCKET_NAME = 'vars-static-homolog';
+const AWS_HOMOLOG_BUCKET_NAME = 'varstation-homologation-sample-files';
+const AWS_DEVELOPMENT_BUCKET_NAME = 'varstation-development-sample-files';
+const AWS_LOCAL_DEVELOPMENT_BUCKET_NAME = 'varstation-static-development';
+
 
 export const ENVIRONMENTS_OPTIONS = Object.freeze({
     PRODUCTION: '[Default] Production',
+    OLD_HOMOLOG:  'Homolog (old)',
     HOMOLOG:  'Homolog',
+    DEVELOPMENT: 'Development',
     LOCAL_DEVELOPMENT: 'Local Development',
 });
 
@@ -23,8 +30,12 @@ export const getConstants = () => {
             return [PRODUCTION_URL, AWS_PRODUCTION_BUCKET_NAME];
         case ENVIRONMENTS_OPTIONS.HOMOLOG:
             return [HOMOLOG_URL, AWS_HOMOLOG_BUCKET_NAME];
+        case ENVIRONMENTS_OPTIONS.OLD_HOMOLOG:
+            return [OLD_HOMOLOG_URL, AWS_OLD_HOMOLOG_BUCKET_NAME];
+        case ENVIRONMENTS_OPTIONS.DEVELOPMENT:
+            return [DEVELOPMENT_URL, AWS_DEVELOPMENT_BUCKET_NAME];
         case ENVIRONMENTS_OPTIONS.LOCAL_DEVELOPMENT:
-            return [LOCAL_URL, AWS_DEVELOPMENT_BUCKET_NAME];
+            return [LOCAL_URL, AWS_LOCAL_DEVELOPMENT_BUCKET_NAME];
         default:
             return [PRODUCTION_URL, AWS_PRODUCTION_BUCKET_NAME];
     }
@@ -39,6 +50,8 @@ export const changeEnvironment = async () => {
             choices: [
                 ENVIRONMENTS_OPTIONS.PRODUCTION,
                 ENVIRONMENTS_OPTIONS.HOMOLOG,
+                ENVIRONMENTS_OPTIONS.OLD_HOMOLOG,
+                ENVIRONMENTS_OPTIONS.DEVELOPMENT,
                 ENVIRONMENTS_OPTIONS.LOCAL_DEVELOPMENT,
             ],
             default: ENVIRONMENTS_OPTIONS.PRODUCTION,
