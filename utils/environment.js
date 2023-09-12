@@ -17,8 +17,8 @@ const AWS_LOCAL_DEVELOPMENT_BUCKET_NAME = 'varstation-static-development';
 
 export const ENVIRONMENTS_OPTIONS = Object.freeze({
     PRODUCTION: '[Default] Production',
-    OLD_HOMOLOG:  'Homolog (old)',
-    HOMOLOG:  'Homolog',
+    OLD_HOMOLOG:  'Homologation (old)',
+    HOMOLOG:  'Homologation',
     DEVELOPMENT: 'Development',
     LOCAL_DEVELOPMENT: 'Local Development',
 });
