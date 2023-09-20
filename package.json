@@ -1,6 +1,6 @@
 {
     "name": "vars-cli",
-    "version": "1.1.2",
+    "version": "1.1.1",
     "description": "A CLI to interact with Varsomics infrastructure",
     "main": "index.js",
     "bin": "./bin/vars-cli.js",

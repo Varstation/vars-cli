@@ -35,14 +35,13 @@ program
     .argument('Path', 'Path of the directory with the routine')
     .argument('Routine name', 'Name of the routine')
     .option('-e, --exclude [string...]', 'Files inside routine folder to exclude', [])
-    .option('-d --duration [int...]', 'role duration time in seconds')
     .action((path, routineName, options) => {
         const authInfo = getJson(AUTH_PATH);
         let credentials = getJson(AWS_CREDENTIALS_PATH);
             if (isCredentialsValid(credentials)) {
                 uploadFiles(credentials, routineName, path, authInfo?.user.organization.name, options['exclude']);
             } else {
-                getAwsCredentialsRequest(options['duration']).then((credentials) => {
+                getAwsCredentialsRequest().then((credentials) => {
                     uploadFiles(credentials, routineName, path, authInfo?.user.organization.name, options['exclude']);
                 }).catch(handleDefaultRequestError);
             }
