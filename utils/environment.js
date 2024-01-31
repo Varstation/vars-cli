@@ -6,9 +6,9 @@ import { AUTH_PATH, AWS_CREDENTIALS_PATH, DATA_FOLDER_PATH, ENVIRONMENT_SELECTIO
 const LOCAL_URL = 'http://localhost:8000/api/';
 const HOMOLOG_URL = 'https://zbtbwrvqf4.execute-api.us-east-1.amazonaws.com/api/';
 const PRODUCTION_URL = 'https://nikjpbtd5h.execute-api.us-east-1.amazonaws.com/api/';
-const AWS_PRODUCTION_BUCKET_NAME = 'vars-static-prod';
-const AWS_HOMOLOG_BUCKET_NAME = 'vars-static-homolog';
-const AWS_DEVELOPMENT_BUCKET_NAME = 'varstation-static-development';
+const AWS_PRODUCTION_BUCKET_NAME = 'varstation-prod-landing';
+const AWS_HOMOLOG_BUCKET_NAME = 'varstation-homolog-landing';
+const AWS_DEVELOPMENT_BUCKET_NAME = 'varstation-dev-landing';
 
 export const ENVIRONMENTS_OPTIONS = Object.freeze({
     PRODUCTION: '[Default] Production',
