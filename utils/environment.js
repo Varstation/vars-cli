@@ -11,7 +11,7 @@ const PRODUCTION_URL = 'https://nikjpbtd5h.execute-api.us-east-1.amazonaws.com/a
 const AWS_PRODUCTION_BUCKET_NAME = 'vars-production-landing';
 const AWS_OLD_HOMOLOG_BUCKET_NAME = 'vars-static-homolog';
 const AWS_HOMOLOG_BUCKET_NAME = 'varstation-homologation-landing';
-const AWS_DEVELOPMENT_BUCKET_NAME = 'varstation-development-landings';
+const AWS_DEVELOPMENT_BUCKET_NAME = 'varstation-development-landing';
 const AWS_LOCAL_DEVELOPMENT_BUCKET_NAME = 'varstation-static-development';
 
 
